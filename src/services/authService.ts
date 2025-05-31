@@ -24,3 +24,6 @@ export const login = (data: LoginData) =>
         }),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
     );
+export const loginApplication = (appId: number) =>
+    api.post<{ token: string; message: string }>(`/applications/${appId}/login`);
+

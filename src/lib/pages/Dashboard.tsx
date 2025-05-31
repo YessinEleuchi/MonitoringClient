@@ -7,11 +7,20 @@ import { Badge } from '@/lib/components/ui/badge.tsx';
 import { Server, Activity, Database, ArrowRight } from 'lucide-react';
 import { listApplications, getAllStats } from '@/services/applicationService.ts';
 import {Application , ApplicationStats} from "@/services/applicationService.ts";
+import { loginApplication } from '@/services/authService';
 
 
-
-
-
+const handleLogin = async (appId: number) => {
+  try {
+    const res = await loginApplication(appId);
+    console.log(`🔐 Token pour application ${appId}:`, res.data.token);
+    alert(`✅ Authentification réussie pour ${appId}`);
+    // Optionnel : localStorage.setItem(`token_${appId}`, res.data.token);
+  } catch (error) {
+    console.error("❌ Échec de l'authentification :", error);
+    alert(`❌ Échec de l'authentification pour ${appId}`);
+  }
+};
 
 const getStatusColor = (status: Application['status']) => {
   switch (status) {
@@ -147,12 +156,22 @@ const Dashboard: React.FC = () => {
                         </div>
                         <div className="flex space-x-2">
                           <Link to={`/applications/${app.id}/endpoints`} className="flex-1">
-                            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                            <Button className="w-full px-2 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white">
                               View Endpoints
                               <ArrowRight className="h-4 w-4 ml-1" />
                             </Button>
                           </Link>
+                          <div className="flex-1">
+                            <Button
+                                variant="outline"
+                                className="w-full px-2 py-1 text-sm"
+                                onClick={() => handleLogin(app.id)}
+                            >
+                              Login
+                            </Button>
+                          </div>
                         </div>
+
                       </div>
                     </CardContent>
                   </Card>

@@ -53,5 +53,7 @@ export const updateEndpoint = (id: number, data: Partial<Endpoint>) =>
 export const deleteEndpoint = (id: number) =>
     api.delete(`/endpoints/${id}`);
 
-export const testEndpoint = (id: number) =>
-    api.post<EndpointResult>(`/endpoints/${id}/test`);
+export const testEndpoint = (id: number, token?: string) =>
+    api.post(`/endpoints/${id}/test`, {}, token ? {
+        headers: { Authorization: `Bearer ${token}` }
+    } : undefined);
