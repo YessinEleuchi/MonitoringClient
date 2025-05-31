@@ -1,5 +1,7 @@
 // src/services/authService.ts
 import api from './api';
+import {EndpointBase} from "@/services/endpointService.ts";
+
 
 export interface Application {
     id: number;
@@ -11,6 +13,7 @@ export interface Application {
     auth_url?: string;
     auth_credentials?: string;
     headers?: string;
+    endpoints?: EndpointBase[];
 }
 
 export interface ApplicationStats {
@@ -20,6 +23,7 @@ export interface ApplicationStats {
     last_updated: string;
     endpoints: number;
     last_health_check: string;
+
 }
 
 export interface DailyStat {
@@ -46,7 +50,7 @@ export const deleteApplication = (id: number) =>
 
 // 🔹 Statistiques
 export const getAppStats = (id: number) =>
-    api.get<ApplicationStats>(`/stats/url/${id}`);
+    api.get<ApplicationStats>(`/stats/stats/url/${id}`);
 
 export const getWeeklyStats = (id: number) =>
     api.get<DailyStat[]>(`/stats/weekly/${id}`);
