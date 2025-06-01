@@ -11,6 +11,7 @@ import ApplicationEndpoints from "@/lib/pages/ApplicationEndpoints";
 import EndpointTesting from "@/lib/pages/EndpointTesting";
 import ProtectedRoute from "@/lib/components/ProtectedRoute";
 import NotFound from "@/lib/pages/NotFound";
+import Configuration from "@/lib/pages/Configuration.tsx";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,11 @@ const App = () => (
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />
+            <Route path="/configuration" element={
+              <ProtectedRoute>
+                <Configuration />
+              </ProtectedRoute>
+            } />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
